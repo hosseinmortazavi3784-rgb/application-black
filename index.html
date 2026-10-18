@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اپ‌سنتر | دانلود اپلیکیشن</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300..900&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#ffffff; --bg-soft:#f5f7fb; --card:#ffffff; --text:#0f172a; --muted:#64748b; --border:#e6eaf2; --primary:#10b981; --primary-2:#059669; --accent:#3b82f6; --shadow:0 8px 24px rgba(15,23,42,.07); --radius:18px; }
+  [data-theme="dark"] { --bg:#0a0f1c; --bg-soft:#0f172a; --card:#121b2e; --text:#e8ecf6; --muted:#94a3b8; --border:#1e2a44; --primary:#10b981; --primary-2:#34d399; --shadow:0 8px 24px rgba(0,0,0,.4); }
+  [data-theme="ocean"] { --bg:#f0f9ff; --bg-soft:#e0f2fe; --card:#ffffff; --text:#082f49; --muted:#0369a1; --border:#bae6fd; --primary:#0284c7; --primary-2:#38bdf8; --accent:#0ea5e9; --shadow:0 8px 24px rgba(2,132,199,.1); }
+  [data-theme="purple"] { --bg:#faf5ff; --bg-soft:#f3e8ff; --card:#ffffff; --text:#3b0764; --muted:#7e22ce; --border:#e9d5ff; --primary:#9333ea; --primary-2:#c084fc; --accent:#a855f7; --shadow:0 8px 24px rgba(147,51,234,.1); }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);line-height:1.8;transition:.3s; background-size: cover; background-attachment: fixed; background-position: center;}
+  body.has-bg::before { content: ''; position: fixed; inset: 0; background: rgba(255,255,255,0.85); z-index: -1; }
+  [data-theme="dark"] body.has-bg::before { background: rgba(10,15,28,0.9); }
+  a{color:inherit;text-decoration:none} button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .container{width:min(1200px,94%);margin-inline:auto}
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb, var(--bg) 85%, transparent);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem}
+  .logo-mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-2));display:grid;place-items:center;color:#fff;font-size:1.2rem}
+  .hero{padding:50px 0 30px;text-align:center}
+  .hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;margin-bottom:14px}
+  .grad{background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;color:transparent}
+  .hero p{color:var(--muted);margin:0 auto 22px; font-size: 1.1rem;}
+  .ad-banner { margin: 20px auto; max-width: 728px; min-height: 90px; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; transition: 0.3s; }
+  .ad-banner.placeholder { border: 2px dashed var(--border); background: var(--bg-soft); color: var(--muted); font-size: 0.9rem; }
+  .ad-banner img { width: 100%; height: auto; display: block; cursor: pointer; }
+  .cats{display:flex;gap:10px;overflow-x:auto;padding:15px 0;}
+  .chip{padding:9px 20px;border-radius:999px;border:1px solid var(--border);background:var(--card);font-size:.88rem;font-weight:600;color:var(--muted);transition:.2s}
+  .chip.active{background:var(--primary);color:#fff;border-color:transparent}
+  .app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;padding-bottom:50px}
+  .app-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:14px;transition:.28s;cursor:pointer;box-shadow:var(--shadow)}
+  .app-card:hover{transform:translateY(-5px);border-color:var(--primary)}
+  .app-icon{width:64px;height:64px;border-radius:16px;display:grid;place-items:center;font-size:1.9rem;flex:0 0 auto;color:#fff}
+  .app-body{flex:1;min-width:0}
+  .app-name{font-weight:700;margin-bottom:2px}
+  .app-dev{font-size:.78rem;color:var(--muted);margin-bottom:8px}
+  .dl-btn{margin-top:10px;padding:8px 14px;border-radius:10px;font-size:.85rem;font-weight:700;background:var(--primary);color:#fff;display:inline-block}
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:100;display:grid;place-items:center;opacity:0;visibility:hidden;transition:.25s;padding:20px}
+  .modal-overlay.open{opacity:1;visibility:visible}
+  .modal{background:var(--card);border-radius:24px;max-width:600px;width:100%;padding:30px;transform:scale(.92);transition:.3s;max-height:90vh;overflow-y:auto;position:relative;box-shadow: 0 20px 40px rgba(0,0,0,.2)}
+  .modal-overlay.open .modal{transform:scale(1)}
+  .modal-close{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:var(--bg-soft);display:grid;place-items:center;font-size:1.2rem;z-index:10}
+  .admin-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; overflow-x: auto; }
+  .admin-tab { padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; color: var(--muted); cursor: pointer; white-space: nowrap; }
+  .admin-tab.active { background: var(--primary); color: #fff; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s; }
+  .admin-form label{display:block;margin-top:12px;font-size:.85rem;font-weight:700}
+  .admin-form input, .admin-form select, .admin-form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg-soft);color:var(--text);font-family:inherit;margin-top:4px; font-size: 0.9rem;}
+  .admin-form input[type="file"] { padding: 8px; }
+  .admin-save{width:100%;padding:14px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;font-weight:800;margin-top:20px; font-size: 1rem; box-shadow: 0 6px 16px rgba(0,0,0,0.1);}
+  footer{border-top:1px solid var(--border);padding:36px 0;text-align:center;background:var(--bg-soft);margin-top:20px}
+  .admin-link{color:var(--muted);font-size:.8rem;cursor:pointer;margin-top:10px;display:inline-block;text-decoration:underline}
+  .preview-img { max-width: 100%; height: 60px; object-fit: contain; margin-top: 8px; border-radius: 6px; border: 1px solid var(--border); background: #fff; }
+  @media (max-width:700px){.nav{flex-wrap:wrap;height:auto;padding:12px 0}.app-grid{grid-template-columns:1fr}}
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo"><span class="logo-mark">⚡</span> <span id="siteNameText">اپ‌سنتر</span></a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1 id="heroTitleText">دانلود <span class="grad">اپلیکیشن‌های اندروید</span></h1>
+    <p id="heroDescText">جدیدترین و محبوب‌ترین اپلیکیشن‌ها را رایگان و امن از اینجا دانلود کنید.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div id="adBanner" class="ad-banner placeholder">
+    <span>📢 محل تبلیغات شما (از پنل مدیریت تنظیم کنید)</span>
+  </div>
+  <div class="cats" id="categoryBar"></div>
+  <div class="app-grid" id="appGrid"></div>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    <div style="display:flex;gap:16px;align-items:center;margin-bottom:18px">
+      <div class="app-icon" id="mIcon"></div>
+      <div><h3 id="mName" style="font-size:1.2rem"></h3><div class="app-dev" id="mDev"></div></div>
+    </div>
+    <p id="mDesc" style="color:var(--muted);font-size:.95rem;margin-bottom:20px; line-height:1.8;"></p>
+    <a href="#" id="mDownload" class="dl-btn" style="display:block;text-align:center;padding:14px;font-size:1rem;">⬇️ دانلود اپلیکیشن</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="adminModal">
+  <div class="modal" style="max-width: 700px;">
+    <button class="modal-close" onclick="document.getElementById('adminModal').classList.remove('open')">✕</button>
+    <h3 style="margin-bottom:20px; text-align:center;">⚙️ پنل مدیریت پیشرفته</h3>
+    <div class="admin-tabs">
+      <div class="admin-tab active" onclick="switchTab('tab-gen')">عمومی و تم</div>
+      <div class="admin-tab" onclick="switchTab('tab-ads')">تبلیغات</div>
+      <div class="admin-tab" onclick="switchTab('tab-apps')">مدیریت اپ‌ها</div>
+    </div>
+    <div id="tab-gen" class="tab-content active admin-form">
+      <label>نام سایت (بالای صفحه):</label>
+      <input type="text" id="cfg_siteName">
+      <label>عنوان اصلی صفحه (Hero):</label>
+      <input type="text" id="cfg_heroTitle">
+      <label>توضیحات زیر عنوان:</label>
+      <textarea id="cfg_heroDesc" rows="2"></textarea>
+      <label>انتخاب تم رنگی سایت:</label>
+      <select id="cfg_theme">
+        <option value="light">☀️ روشن (پیش‌فرض)</option>
+        <option value="dark">🌙 تاریک</option>
+        <option value="ocean">🌊 آبی اقیانوسی</option>
+        <option value="purple">🔮 بنفش سلطنتی</option>
+      </select>
+      <label>تصویر پس‌زمینه (از گالری):</label>
+      <input type="file" id="cfg_bgImage" accept="image/*">
+      <div id="bgPreviewContainer"></div>
+      <button onclick="removeBg()" style="color:#ef4444; font-size:0.8rem; margin-top:5px; text-decoration:underline;">حذف تصویر پس‌زمینه</button>
+    </div>
+    <div id="tab-ads" class="tab-content admin-form">
+      <label>لینک مقصد تبلیغات (وقتی کاربر کلیک کرد):</label>
+      <input type="text" id="cfg_adLink" placeholder="https://...">
+      <label>تصویر بنر تبلیغاتی (از گالری):</label>
+      <input type="file" id="cfg_adImage" accept="image/*">
+      <div id="adPreviewContainer"></div>
+      <button onclick="removeAd()" style="color:#ef4444; font-size:0.8rem; margin-top:5px; text-decoration:underline;">حذف تبلیغ</button>
+    </div>
+    <div id="tab-apps" class="tab-content admin-form">
+      <div id="appsFormContainer"></div>
+    </div>
+    <button class="admin-save" onclick="saveAllSettings()">💾 ذخیره تمام تغییرات</button>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>ساخته‌شده برای جامعه اندروید ایران — © ۱۴۰۴</p>
+    <span class="admin-link" onclick="promptAdmin()">⚙️ تنظیمات مدیریت</span>
+  </div>
+</footer>
+
+<script>
+  const defaultConfig = {
+    siteName: "اپ‌سنتر",
+    heroTitle: "دانلود <span class='grad'>اپلیکیشن‌های اندروید</span>",
+    heroDesc: "جدیدترین و محبوب‌ترین اپلیکیشن‌ها را رایگان و امن از اینجا دانلود کنید.",
+    theme: "light",
+    bgImage: "",
+    adLink: "",
+    adImage: "",
+    apps: [
+      { id: 1, name: "مدیریت مالی", developer: "استودیو پارسا", icon: "💰", color: "#10b981", category: "ابزار", downloadUrl: "https://example.com/app1.apk", desc: "توضیحات کامل اپلیکیشن اول..." },
+      { id: 2, name: "بازی سایه‌ها", developer: "گیم‌لند", icon: "🎮", color: "#8b5cf6", category: "بازی", downloadUrl: "https://example.com/app2.apk", desc: "توضیحات کامل اپلیکیشن دوم..." }
+    ]
+  };
+  let config = JSON.parse(localStorage.getItem('siteConfigV2')) || defaultConfig;
+  function initSite() {
+    document.documentElement.setAttribute('data-theme', config.theme);
+    document.getElementById('siteNameText').textContent = config.siteName;
+    document.getElementById('heroTitleText').innerHTML = config.heroTitle;
+    document.getElementById('heroDescText').textContent = config.heroDesc;
+    if (config.bgImage) {
+      document.body.style.backgroundImage = `url(${config.bgImage})`;
+      document.body.classList.add('has-bg');
+    } else {
+      document.body.style.backgroundImage = 'none';
+      document.body.classList.remove('has-bg');
+    }
+    const adBox = document.getElementById('adBanner');
+    if (config.adImage) {
+      adBox.classList.remove('placeholder');
+      adBox.innerHTML = `<a href="${config.adLink || '#'}" target="_blank"><img src="${config.adImage}"></a>`;
+    } else {
+      adBox.classList.add('placeholder');
+      adBox.innerHTML = `<span>📢 محل تبلیغات شما (از پنل مدیریت تنظیم کنید)</span>`;
+    }
+    renderApps();
+    renderCategories();
+  }
+  function renderApps() {
+    const grid = document.getElementById('appGrid');
+    grid.innerHTML = config.apps.map(a => `
+      <div class="app-card" onclick="openApp(${a.id})">
+        <div class="app-icon" style="background:${a.color}">${a.icon}</div>
+        <div class="app-body">
+          <div class="app-name">${a.name}</div>
+          <div class="app-dev">${a.developer}</div>
+          <a href="${a.downloadUrl}" target="_blank" class="dl-btn" onclick="event.stopPropagation()">⬇️ دانلود</a>
+        </div>
+      </div>
+    `).join('');
+  }
+  function renderCategories() {
+    const catBar = document.getElementById('categoryBar');
+    const cats = ["همه", ...new Set(config.apps.map(a => a.category))];
+    catBar.innerHTML = cats.map((c, i) => `
+      <button class="chip ${i === 0 ? 'active' : ''}" onclick="filterCat(this, '${c}')">${c}</button>
+    `).join('');
+  }
+  window.filterCat = function(btn, cat) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const grid = document.getElementById('appGrid');
+    const filtered = cat === "همه" ? config.apps : config.apps.filter(a => a.category === cat);
+    grid.innerHTML = filtered.map(a => `
+      <div class="app-card" onclick="openApp(${a.id})">
+        <div class="app-icon" style="background:${a.color}">${a.icon}</div>
+        <div class="app-body">
+          <div class="app-name">${a.name}</div>
+          <div class="app-dev">${a.developer}</div>
+          <a href="${a.downloadUrl}" target="_blank" class="dl-btn" onclick="event.stopPropagation()">⬇️ دانلود</a>
+        </div>
+      </div>
+    `).join('');
+  }
+  window.openApp = function(id) {
+    const app = config.apps.find(a => a.id === id);
+    if(!app) return;
+    document.getElementById('mIcon').textContent = app.icon;
+    document.getElementById('mIcon').style.background = app.color;
+    document.getElementById('mName').textContent = app.name;
+    document.getElementById('mDev').textContent = app.developer;
+    document.getElementById('mDesc').textContent = app.desc || "توضیحات ثبت نشده است.";
+    document.getElementById('mDownload').href = app.downloadUrl;
+    document.getElementById('modal').classList.add('open');
+  }
+  const ADMIN_PASSWORD = "Ofogh@1191";
+  window.promptAdmin = function() {
+    const pass = prompt("لطفاً رمز عبور مدیریت را وارد کنید:");
+    if (pass === ADMIN_PASSWORD) { openAdminPanel(); } 
+    else if (pass !== null) { alert("❌ رمز عبور اشتباه است!"); }
+  }
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+  }
+  function openAdminPanel() {
+    document.getElementById('cfg_siteName').value = config.siteName;
+    document.getElementById('cfg_heroTitle').value = config.heroTitle;
+    document.getElementById('cfg_heroDesc').value = config.heroDesc;
+    document.getElementById('cfg_theme').value = config.theme;
+    document.getElementById('cfg_adLink').value = config.adLink;
+    document.getElementById('bgPreviewContainer').innerHTML = config.bgImage ? `<img src="${config.bgImage}" class="preview-img">` : '';
+    document.getElementById('adPreviewContainer').innerHTML = config.adImage ? `<img src="${config.adImage}" class="preview-img">` : '';
+    const appsCont = document.getElementById('appsFormContainer');
+    appsCont.innerHTML = config.apps.map((app, i) => `
+      <div style="border:1px solid var(--border); padding:12px; border-radius:10px; margin-bottom:12px; background:var(--bg-soft)">
+        <div style="font-weight:800; font-size:0.9rem; margin-bottom:10px;">اپلیکیشن ${i+1}</div>
+        <label>نام اپ:</label>
+        <input type="text" id="app_name_${app.id}" value="${app.name}">
+        <label>سازنده:</label>
+        <input type="text" id="app_dev_${app.id}" value="${app.developer}">
+        <label>لینک دانلود (APK):</label>
+        <input type="text" id="app_url_${app.id}" value="${app.downloadUrl}">
+        <label>توضیحات:</label>
+        <textarea id="app_desc_${app.id}" rows="2">${app.desc || ''}</textarea>
+      </div>
+    `).join('');
+    document.getElementById('adminModal').classList.add('open');
+  }
+  window.saveAllSettings = function() {
+    config.siteName = document.getElementById('cfg_siteName').value;
+    config.heroTitle = document.getElementById('cfg_heroTitle').value;
+    config.heroDesc = document.getElementById('cfg_heroDesc').value;
+    config.theme = document.getElementById('cfg_theme').value;
+    config.adLink = document.getElementById('cfg_adLink').value;
+    config.apps.forEach(app => {
+      app.name = document.getElementById(`app_name_${app.id}`).value;
+      app.developer = document.getElementById(`app_dev_${app.id}`).value;
+      app.downloadUrl = document.getElementById(`app_url_${app.id}`).value;
+      app.desc = document.getElementById(`app_desc_${app.id}`).value;
+    });
+    localStorage.setItem('siteConfigV2', JSON.stringify(config));
+    initSite();
+    document.getElementById('adminModal').classList.remove('open');
+    alert("✅ تمام تغییرات با موفقیت ذخیره شد!");
+  }
+  document.getElementById('cfg_bgImage').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) { const reader = new FileReader(); reader.onload = function(event) { config.bgImage = event.target.result; document.getElementById('bgPreviewContainer').innerHTML = `<img src="${config.bgImage}" class="preview-img">`; }; reader.readAsDataURL(file); }
+  });
+  document.getElementById('cfg_adImage').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) { const reader = new FileReader(); reader.onload = function(event) { config.adImage = event.target.result; document.getElementById('adPreviewContainer').innerHTML = `<img src="${config.adImage}" class="preview-img">`; }; reader.readAsDataURL(file); }
+  });
+  window.removeBg = function() { config.bgImage = ""; document.getElementById('bgPreviewContainer').innerHTML = ""; document.getElementById('cfg_bgImage').value = ""; }
+  window.removeAd = function() { config.adImage = ""; document.getElementById('adPreviewContainer').innerHTML = ""; document.getElementById('cfg_adImage').value = ""; }
+  initSite();
+</script>
+</body>
+</html>
